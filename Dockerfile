@@ -31,6 +31,8 @@ RUN			sh /tmp/scripts/setup_mariadb.sh
 # Run wordpress installation and setup it
 RUN			sh /tmp/scripts/setup_wp.sh
 
+RUN			sh /tmp/scripts/setup_pma.sh
+
 # Run nginx setup script
 RUN			sh /tmp/scripts/setup_nginx.sh
 
