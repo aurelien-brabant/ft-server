@@ -35,4 +35,8 @@ echo -e "[\033[0;32mDONE\033[0m] Generated wp-config.php file !"
 
 echo -e "[\033[0;33mPREPARING\033[0m] Wordpress installation using wp-cli"
 
-wp core install --allow-root --url="http://localhost" --title="ft_server blog" --admin_user="admin" --admin_password="wordpress" --admin_email="abrabant@student.42.fr"
+wp core install --allow-root --url="http://localhost/wordpress" --title="ft_server blog" --admin_user="admin" --admin_password="wordpress" --admin_email="abrabant@student.42.fr"
+
+wp post delete 1 --allow-root 
+
+wp post create /tmp/assets/post.txt --post_type=page --post-status=publish --post_title="Welcome to abrabant's ft_server project!" --allow-root

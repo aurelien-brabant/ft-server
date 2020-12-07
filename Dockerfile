@@ -19,6 +19,9 @@ RUN			apt-get install -y			\
 				php-fpm					\
 				php-mysql				
 
+# Disable the default pathinfo option, for security concerns.
+RUN			sed -i s/pathinfo=1/pathinfo=0/g /etc/php/7.3/fpm/php.ini
+
 # Copy scripts to be executed in the container
 COPY		/srcs /tmp
 
