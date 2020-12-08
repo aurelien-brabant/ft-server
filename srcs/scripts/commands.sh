@@ -1,18 +1,20 @@
-#! /bin/sh
+#! /bin/bash
 
 # This script will be run as a docker ENTRYPOINT instruction.
 
-# Start required services
-echo "===== \033[0;33mSTARTING \033[0mft_server required services ======"
-service mysql start
-service php7.3-fpm start 
+set -e
 
-# Setting global configuration option "daemon off" to keep the container
-# running with nginx in the foreground
+# Services to run in the background at container startup.
+# Does not include nginx, as nginx must run in the foreground to keep the container running.
+services=( "mysql" "php7.3-fpm" )
+
+for service in ${services[@]}
+do
+	printf "[\033[0;34mSTARTING\033[0m] \033[0;33m$service\033[0m"
+	service $service start
+	printf "[\033[0;32mSTARTED\033[0m] \033[0;33m$service\033[0m"
+done
+
+printf "\033[0;34m[STARTING\033[0m] \033[0;33mnginx\033[0m in the foreground."
+
 nginx -g "daemon off;" 
-
-if [ $? -eq 0 ]; then
-	echo -e ">> \033[0;32mnginx web server successfully started. Running in the foreground to keep the container running.\033[0m"
-else
-	echo -e ">> \033[0;31mSeems that nginx failed to start properly.\033[0m"
-fi

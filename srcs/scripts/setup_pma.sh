@@ -1,8 +1,11 @@
 # !/bin/sh
 
-# Installation script for PHP My Admin
+PMA_TARBALL="https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.tar.gz"
+PMA_PATH="/var/www/html/phpmyadmin"
 
-wget /tmp https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.tar.gz
+cd $SETUP_PATH
+
+wget $PMA_TARBALL
 
 mkdir -p /var/www/html/phpmyadmin 2> /dev/null
 

@@ -11,29 +11,39 @@ RUN			apt-get install -y			\
 				nginx					\
 				mariadb-client			\
 				mariadb-server			\
-				lsb-release				\
-				apt-transport-https		\
-				ca-certificates			\
 				wget					\
 				php7.3-cli				\
+				php-curl				\
+				php-gd					\
+				php-dom					\
+				php-mbstring			\
+				php-imagick				\
+				php-zip					\
 				php-fpm					\
-				php-mysql				
+				php-mysql				\
+				openssl					\
+				curl					\
+				zip						\
+				git
 
 # Disable the default pathinfo option, for security concerns.
 RUN			sed -i s/pathinfo=1/pathinfo=0/g /etc/php/7.3/fpm/php.ini
 
-# Copy scripts to be executed in the container
-COPY		/srcs /tmp
+# Copy setup files in /tmp/setup and set the SETUP_PATH env.
+COPY		/srcs /tmp/setup
+ENV			SETUP_PATH=/tmp/setup
 
-# Run mariadb setup homemade script
-RUN			sh /tmp/scripts/setup_mariadb.sh
+# mariadb setup homemade script
+RUN			sh $SETUP_PATH/scripts/setup_mariadb.sh
 
-# Run wordpress installation and setup it
-RUN			sh /tmp/scripts/setup_wp.sh
+# wordpress setup script
+RUN			sh $SETUP_PATH/scripts/setup_wp.sh
 
-RUN			sh /tmp/scripts/setup_pma.sh
+# phpMyAdmin setup script
+RUN			sh $SETUP_PATH/scripts/setup_pma.sh
 
-# Run nginx setup script
-RUN			sh /tmp/scripts/setup_nginx.sh
+# nginx setup script
+RUN			sh $SETUP_PATH/scripts/setup_nginx.sh
 
-ENTRYPOINT	. /tmp/scripts/commands.sh
+# The list of things to be done when container is started.
+ENTRYPOINT	bash -c "source $SETUP_PATH/scripts/commands.sh"
