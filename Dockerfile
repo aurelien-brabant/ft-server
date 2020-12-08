@@ -34,16 +34,16 @@ COPY		/srcs /tmp/setup
 ENV			SETUP_PATH=/tmp/setup
 
 # mariadb setup homemade script
-RUN			sh $SETUP_PATH/scripts/setup_mariadb.sh
+RUN			bash $SETUP_PATH/scripts/setup_mariadb.sh
 
 # wordpress setup script
-RUN			sh $SETUP_PATH/scripts/setup_wp.sh
+RUN			bash $SETUP_PATH/scripts/setup_wp.sh
 
 # phpMyAdmin setup script
-RUN			sh $SETUP_PATH/scripts/setup_pma.sh
+RUN			bash $SETUP_PATH/scripts/setup_pma.sh
 
 # nginx setup script
-RUN			sh $SETUP_PATH/scripts/setup_nginx.sh
+RUN			bash $SETUP_PATH/scripts/setup_nginx.sh
 
 # The list of things to be done when container is started.
 ENTRYPOINT	bash -c "source $SETUP_PATH/scripts/commands.sh"

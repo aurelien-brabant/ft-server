@@ -1,4 +1,4 @@
-# !/bin/sh
+#!/bin/bash
 
 PMA_TARBALL="https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.tar.gz"
 PMA_PATH="/var/www/html/phpmyadmin"
